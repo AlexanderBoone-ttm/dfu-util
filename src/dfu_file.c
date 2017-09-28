@@ -110,43 +110,7 @@ static int probe_prefix(struct dfu_file *file)
 void dfu_progress_bar(const char *desc, unsigned long long curr,
 		unsigned long long max)
 {
-	static char buf[PROGRESS_BAR_WIDTH + 1];
-	static unsigned long long last_progress = -1;
-	static time_t last_time;
-	time_t curr_time = time(NULL);
-	unsigned long long progress;
-	unsigned long long x;
-
-	/* check for not known maximum */
-	if (max < curr)
-		max = curr + 1;
-	/* make none out of none give zero */
-	if (max == 0 && curr == 0)
-		max = 1;
-
-	/* compute completion */
-	progress = (PROGRESS_BAR_WIDTH * curr) / max;
-	if (progress > PROGRESS_BAR_WIDTH)
-		progress = PROGRESS_BAR_WIDTH;
-	if (progress == last_progress &&
-	    curr_time == last_time)
-		return;
-	last_progress = progress;
-	last_time = curr_time;
-
-	for (x = 0; x != PROGRESS_BAR_WIDTH; x++) {
-		if (x < progress)
-			buf[x] = '=';
-		else
-			buf[x] = ' ';
-	}
-	buf[x] = 0;
-
-	printf("\r%s\t[%s] %3lld%% %12lld bytes", desc, buf,
-	    (100ULL * curr) / max, curr);
-
-	if (progress == PROGRESS_BAR_WIDTH)
-		printf("\n%s done.\n", desc);
+	return;
 }
 
 void *dfu_malloc(size_t size)
